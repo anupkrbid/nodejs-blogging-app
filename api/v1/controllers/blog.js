@@ -1,3 +1,7 @@
+const mongoose = require('mongoose');
+
+const Blog = require('../models/blog');
+
 exports.getBlogs = (req, res, next) => {
   res.status(200)
     .json({
@@ -18,12 +22,23 @@ exports.getBlog = (req, res, next) => {
 };
 
 exports.postBlog = (req, res, next) => {
-  res.status(200)
-    .json({
-      status: true,
-      message: 'BLOG POST',
-      data: req.body
+  const blog = new Blog({
+    content: req.body.content,
+    created_at: new Date().toISOString(),
+    _id: new mongoose.Types.ObjectId()
+  });
+  blog.save()
+    .then(result => {
+      res.status(200)
+        .json({
+          status: true,
+          message: 'BLOG POST',
+          data: req.body,
+          result: result
+        })
     })
+    .catch(error => next(new Error(error)));
+
 };
 
 exports.patchBlog = (req, res, next) => {

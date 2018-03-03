@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require("mongoose");
 
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -11,6 +12,18 @@ const BlogRoutes = require('./api/v1/routes/blog');
 const UserRoutes = require('./api/v1/routes/user');
 
 const app = express();
+
+// mongoose.connect(
+//   "mongodb://node-shop:" +
+//   process.env.MONGO_ATLAS_PW +
+//   "@node-rest-shop-shard-00-00-wovcj.mongodb.net:27017,node-rest-shop-shard-00-01-wovcj.mongodb.net:27017,node-rest-shop-shard-00-02-wovcj.mongodb.net:27017/test?ssl=true&replicaSet=node-rest-shop-shard-0&authSource=admin",
+//   {
+//     useMongoClient: true
+//   }
+// );
+
+mongoose.connect('mongodb://localhost:27017/NodeJSBloggingApp');
+mongoose.Promise = global.Promise;
 
 app.use(morgan('dev'));
 
