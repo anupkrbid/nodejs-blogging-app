@@ -22,10 +22,12 @@ const app = express();
 //   }
 // );
 
-mongoose.connect('mongodb://localhost:27017/NodeJSBloggingApp');
 mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/NodeJSBloggingApp');
 
 app.use(morgan('dev'));
+
+// app.use('/uploads', express.static('uploads'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

@@ -3,22 +3,31 @@ const mongoose = require('mongoose');
 const Blog = require('../models/blog');
 
 exports.getBlogs = (req, res, next) => {
-  res.status(200)
-    .json({
-      status: true,
-      message: 'BLOGS GET',
-      data: req.body
+  Blog.find()
+    .exec()
+    .then(result => {
+      res.status(200)
+        .json({
+          status: true,
+          message: 'BLOGS GET',
+          result: result
+        })
     })
+    .catch(error => next(new Error(error)));
 };
 
 exports.getBlog = (req, res, next) => {
-  res.status(200)
-    .json({
-      status: true,
-      message: 'BLOG GET',
-      blogId: req.params.blogId,
-      data: req.body
+  Blog.findById(req.params.blogId)
+    .exec()
+    .then(result => {
+      res.status(200)
+        .json({
+          status: true,
+          message: 'BLOG GET',
+          result: result
+        })
     })
+    .catch(error => next(new Error(error)));
 };
 
 exports.postBlog = (req, res, next) => {
@@ -33,7 +42,26 @@ exports.postBlog = (req, res, next) => {
         .json({
           status: true,
           message: 'BLOG POST',
-          data: req.body,
+          result: result
+        })
+    })
+    .catch(error => next(new Error(error)));
+};
+
+exports.patchBlog = (req, res, next) => {
+  const toUpdate = {};
+  for(const key in req.body) {
+    if(req.body.hasOwnProperty(key)) {
+      toUpdate[key] = req.body[key];
+    }
+  }
+  Blog.update({ _id: req.params.blogId }, { $set: toUpdate })
+    .exec()
+    .then(result => {
+      res.status(200)
+        .json({
+          status: true,
+          message: 'BLOG PATCH',
           result: result
         })
     })
@@ -41,22 +69,16 @@ exports.postBlog = (req, res, next) => {
 
 };
 
-exports.patchBlog = (req, res, next) => {
-  res.status(200)
-    .json({
-      status: true,
-      message: 'BLOG PATCH',
-      blogId: req.params.blogId,
-      data: req.body
-    })
-};
-
 exports.deleteBlog = (req, res, next) => {
-  res.status(200)
-    .json({
-      status: true,
-      message: 'BLOG DELETE',
-      blogId: req.params.blogId,
-      data: req.body
+  Blog.remove({ _id: req.params.blogId })
+    .exec()
+    .then(result => {
+      res.status(200)
+        .json({
+          status: true,
+          message: 'BLOG DELETE',
+          result: result
+        })
     })
+    .catch(error => next(new Error(error)));
 };
