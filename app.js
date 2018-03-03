@@ -1,13 +1,21 @@
 const express = require('express');
+const morgan = require('morgan');
+
+const ErrorHandler = require('./middlewares/error-handler');
 
 const AuthRoutes = require('./api/v1/routes/auth');
-const BlogRoutes = require('./api/v1/routes/blog');
 const UserRoutes = require('./api/v1/routes/user');
+const BlogRoutes = require('./api/v1/routes/blog');
 
 const app = express();
+
+app.use(morgan('dev'));
 
 app.use('/api/v1/', AuthRoutes);
 app.use('/api/v1/users', UserRoutes);
 app.use('/api/v1/blogs', BlogRoutes);
+
+app.use(ErrorHandler.badRequest);
+app.use(ErrorHandler.anyError);
 
 module.exports = app;
