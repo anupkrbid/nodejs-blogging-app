@@ -1,41 +1,53 @@
 exports.signIn = (req, res, next) => {
   res.status(200)
     .json({
-      message: 'SIGN IN'
+      status: true,
+      message: 'SIGN IN',
+      data: req.body
     })
 };
 
 exports.signUp = (req, res, next) => {
   res.status(200)
     .json({
-      message: 'SIGN UP'
+      status: true,
+      message: 'SIGN UP',
+      data: req.body
     })
 };
 
 exports.signOut = (req, res, next) => {
   res.status(200)
     .json({
-      message: 'SIGN OUT'
+      status: true,
+      message: 'SIGN OUT',
+      data: req.body
     })
 };
 
 exports.emailTaken = (req, res, next) => {
   res.status(200)
     .json({
-      message: 'EMAIL TAKEN'
+      status: true,
+      message: 'EMAIL TAKEN',
+      data: req.body
     })
 };
 
 exports.forgotPassword = (req, res, next) => {
   res.status(200)
     .json({
-      message: 'FORGOT PASSWORD'
+      status: true,
+      message: 'FORGOT PASSWORD',
+      data: req.body
     })
 };
 
 exports.resetPassword = (req, res, next) => {
   res.status(200)
     .json({
-      message: 'RESET PASSWORD'
+      status: true,
+      message: 'RESET PASSWORD',
+      data: req.body
     })
 };
