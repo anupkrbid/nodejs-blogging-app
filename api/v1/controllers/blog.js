@@ -32,8 +32,10 @@ exports.getBlog = (req, res, next) => {
 
 exports.postBlog = (req, res, next) => {
   const blog = new Blog({
+    title: req.body.title,
     content: req.body.content,
     created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
     _id: new mongoose.Types.ObjectId()
   });
   blog.save()
@@ -53,6 +55,7 @@ exports.patchBlog = (req, res, next) => {
   for(const key in req.body) {
     if(req.body.hasOwnProperty(key)) {
       toUpdate[key] = req.body[key];
+      toUpdate['updated_at'] = new Date().toISOString();
     }
   }
   Blog.update({ _id: req.params.blogId }, { $set: toUpdate })
@@ -66,7 +69,6 @@ exports.patchBlog = (req, res, next) => {
         })
     })
     .catch(error => next(new Error(error)));
-
 };
 
 exports.deleteBlog = (req, res, next) => {
